@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 var Schema = mongoose.Schema, ObjectId = Schema.ObjectId;
 const imageSchema = new mongoose.Schema({
-    "filename": String,
-    "originalname": String,
-    "path": String,
-    "mimetype": String,
+    "filename": {type: String},
+    "originalname": {type: String},
+    "path": {type: String},
+    "mimetype": {type: String},
   },{
     collection: "images"
     });
