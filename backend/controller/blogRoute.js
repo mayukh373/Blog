@@ -8,6 +8,10 @@ const ValidateLoginData = require("../Validation/ValidateLoginData");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+onst imageSchema = require("../models/image");
+const multer = require('multer');
+const path = require('path');
+
 //create new account(public)
 blogRoute.post("/create-account", async (req, res) => {
     const { errors, isValid } = ValidateRegisterData(req.body);
@@ -160,5 +164,51 @@ const getToken = (id, username, email) => {
         expiresIn: '1d'
     })
 }
+
+// Set up Multer for file uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'public/uploads/');
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname));
+    },
+  });
+  
+  const upload = multer({ storage });
+  
+  // Upload an image
+  blogRoute.post('/upload', upload.single('image'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).send('No file uploaded.');
+      }
+  
+      const { originalname, filename, path, mimetype } = req.file;
+  
+      // Save image data to MongoDB
+      const image = new imageSchema({ originalname, filename, path, mimetype });
+      await image.save();
+  
+      res.json(image);
+    } catch (error) {
+      res.status(400).json({ error: 'Failed to upload image.' });
+    }
+  });
+  
+  // Get an image by its ID
+  blogRoute.get('/:id', async (req, res) => {
+    try {
+      const image = await imageSchema.findById(req.params.id);
+  
+      if (!image) {
+        return res.status(400).json({ error: 'Image not found.' });
+      }
+  
+      res.sendFile(image.path);
+    } catch (error) {
+      res.status(400).json({ error: 'Failed to retrieve image.' });
+    }
+  });
 
 module.exports = blogRoute;
