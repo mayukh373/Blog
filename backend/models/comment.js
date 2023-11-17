@@ -5,7 +5,8 @@ const commentSchema = new Schema({
     "author": {type: String},
     "postId": {type: ObjectId},
     "userId": {type: ObjectId},
-    "postedAt": {type: Date}
+    "userImagePath": {type: String},
+    "postedAt": {type: Date},
 }, {
     collection: "comments"
 })

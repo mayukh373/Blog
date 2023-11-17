@@ -1,0 +1,256 @@
+.view::after {
+    display: block;
+    content: '';
+    border-bottom: solid 3px red;
+    transform: scaleX(0);
+    transition: transform 500ms ease-in-out;
+}
+
+.view:hover:after {
+    transform: scaleX(1)
+}
+
+.edit-profile:hover {
+    background-color: rgb(57, 56, 56);
+}
+
+.profile-link {
+    cursor: pointer
+}
+
+.write-icon {
+    border: 1px solid white;
+}
+
+.write-icon:hover {
+    background-color: rgba(47, 45, 45, 0.715);
+}
+
+.nav-container {
+    display: flex;
+}
+
+@media screen and (min-width: 601px) {
+    .nav-menu {
+        display: none !important
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .show-user-options {
+        display: none !important
+    }
+}
+
+@media screen and (max-width: 416px) {
+    .nav-container {
+        flex-wrap: wrap;
+    }
+
+    .breakpoint-xsm {
+        flex-basis: 100%;
+        height: 0;
+    }
+
+    .nav-title {
+        flex-basis: 100% !important;
+        text-align: center !important;
+        margin-bottom: 15px;
+        justify-content: center;
+    }
+
+    .nav-search {
+        margin-left: 10px;
+    }
+
+    .nav-menu {
+        flex-basis: 20px !important;
+        margin-left: 0px !important;
+    }
+}
+
+@media screen and (max-width: 643px) {
+    .nav-menu-options {
+        top: 50px;
+    }
+}
+
+@media screen and (max-width: 417px) {
+    .nav-menu-options {
+        top: 80px;
+    }
+}
+
+.home-posts {
+    box-shadow: 2px 2px 2px grey;
+}
+
+.home-posts:hover {
+    box-shadow: 2px 2px 5px grey;
+}
+
+.home-posts-desc {
+    font-size: 13px;
+    margin-bottom: 3px;
+    font-family: Roboto;
+}
+
+.post-view-stats {
+    font-size: 13px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.profile-nav-container {
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    justify-content: center;
+}
+
+.view-profile-blogs {
+    display: flex;
+}
+
+.view-profile-main {
+    background-color: #bcb9b9;
+}
+
+.user-bio {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding-bottom: 2px;
+    border-bottom: 1px solid white;
+}
+
+.username-txt {
+    font-size: 50px;
+    font-weight: 650;
+}
+
+.tab-shrink-right:after {
+    display: block;
+    content: '';
+    border-bottom: solid 3px black;
+    transform-origin: 44px;
+    transform: scaleX(0);
+    transition: transform 500ms ease-in-out;
+}
+
+.tab-shrink-left:after {
+    display: block;
+    content: '';
+    border-bottom: solid 3px black;
+    transform-origin: 0px;
+    transform: scaleX(0);
+    transition: transform 500ms ease-in-out;
+}
+
+.tab-grow-right:after {
+    display: block;
+    content: '';
+    border-bottom: solid 3px black;
+    transform-origin: 0px;
+    transform: scaleX(1);
+    transition: transform 500ms ease-in-out;
+}
+
+.tab-grow-left:after {
+    display: block;
+    content: '';
+    border-bottom: solid 3px black;
+    transform-origin: 44px;
+    transform: scaleX(1);
+    transition: transform 500ms ease-in-out;
+}
+
+.profile-edit-modal {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.post-cover img {
+    height: 250px;
+    width: 300px;
+}
+
+.btn-fav:hover {
+    filter: drop-shadow(0.5px 0.5px 0.5px red);
+    cursor: pointer;
+}
+
+.btn-fav-true {
+    fill: red;
+}
+
+/**------------------------------------------------------------------------------------------------/
+/*ABOUT US PAGE DESIGN*/
+/* body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: #fff;
+    color: #333;
+} */
+/* 
+.about-us-container {
+    padding: 30px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.about-us-box {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.about-us-title {
+    color: #000;
+    font-family: 'Verdana', sans-serif;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.about-us-subtitle {
+    font-family: 'Verdana', sans-serif;
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+.about-us-text {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.social-icons {
+    margin-top: 30px;
+}
+
+.icon {
+    color: #fff;
+    margin-right: 20px;
+    font-size: 36px;
+}
+
+.mission-box {
+    background-color: #000;
+    color: #fff;
+}
+
+.apart-box {
+    background-color: #fff;
+    color: #000;
+}
+
+.community-box {
+    background-color: #000;
+    color: #fff;
+} */

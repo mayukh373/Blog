@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const user = require('./user')
+
 var Schema = mongoose.Schema, ObjectId = Schema.ObjectId;
 const postSchema = new Schema({
     "title": {type: String}, 
@@ -6,9 +8,11 @@ const postSchema = new Schema({
     "content": {type: String},
     "username": {type: String},
     "userId": {type: ObjectId},
-    "image": {type: String},
+    "userImagePath": {type: String},
+    "imagePath": {type: String},
     "categories": {type: Array},
-    "updatedAt": {type: Date}
+    "updatedAt": {type: Date},
+    "viewedBy": {type: Array}
 }, {
     collection: "posts"
 });

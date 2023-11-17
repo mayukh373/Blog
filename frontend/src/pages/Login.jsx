@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import Footer from "../components/Footer"
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
 import axios from "axios"
 import { UserContext } from "../context/UserContext"
 
@@ -8,27 +8,29 @@ import { UserContext } from "../context/UserContext"
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [error, setError] = useState({status: false, message: ""})
-  const {setUser} = useContext(UserContext)
+  const [error, setError] = useState({ status: false, message: "" })
+  const { user, setUser } = useContext(UserContext)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (user) navigate('/')
+  })
 
   const handleLogin = async () => {
     try {
       const res = await axios.post("http://localhost:4000/blogRoute/login", { email, password })
-      // console.log("A");
-      // console.log(res.data);
       setUser(res.data);
       navigate("/");
     }
     catch (err) {
-      setError({status: true, message: err.response.data})
+      setError({ status: true, message: err.response.data })
     }
   }
   return (
     <>
-      <div className="flex items-center justify-between px-6 md:px-[200px] py-4 border-b-4 border-zinc-950">
-        <h1 className="text-lg md:text-xl font-extrabold"><Link to="/">Blog Market</Link></h1>
-        <h3><Link to="/register">Register</Link></h3>
+      <div className="flex items-center justify-between px-6 md:px-[200px] py-4 bg-black">
+        <h1 className="font-extrabold text-white nav-title px-5 my-auto "><Link to="/">LucidLines</Link></h1>
+        <Link to="/register"><h3 className="text-white px-4 py-0.5 write-icon">Register</h3></Link>
       </div>
       <div className="w-full flex justify-center items-center h-[80vh] ">
         <div className="flex flex-col justify-center items-center space-y-4 w-[80%] md:w-[25%]">
@@ -39,7 +41,7 @@ const Login = () => {
           {error.status && <h3 className="text-red-500 text-sm ">{error.message}</h3>}
           <div className="flex justify-center items-center space-x-3">
             <p>New here?</p>
-            <p className="text-gray-500 hover:text-black"><Link to="/register">Register</Link></p>
+            <p className="text-gray-500 hover:text-black "><Link to="/register">Register</Link></p>
           </div>
         </div>
       </div>

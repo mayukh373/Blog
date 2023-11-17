@@ -18,11 +18,13 @@ db.on("error", () => {
 })
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use("/blogRoute", blogRoute);
 app.use("/auth/blogRoute", protect, blogRoute)
 
+// Middleware to serve uploaded images
+app.use('/public/uploads', express.static('public/uploads'));
 
 app.listen(4000, () => {
     console.log("Server connected to 4000")
