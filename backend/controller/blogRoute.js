@@ -9,6 +9,34 @@ const ValidateUpdateProfileData = require("../Validation/ValidateUpdateProfileDa
 const ValidateUpdateEmail = require("../Validation/ValidateUpdateEmail");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const multer = require('multer');
+const fs = require("fs-extra")
+const path = require('path');
+
+// Set up Multer for file uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    },
+});
+
+const upload = multer({ storage });
+
+// Upload an image
+blogRoute.post('/uploads', upload.single('file'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json('No file uploaded.');
+        }
+        const { path } = req.file;
+        res.json(path);
+    } catch (error) {
+        res.status(400).json({ error: 'Failed to upload image.' });
+    }
+})
 
 //create new account(public)
 blogRoute.post("/create-account", async (req, res) => {
@@ -281,51 +309,5 @@ const deleteImage = (imagePath) => {
     if (!imagePath) return;
     fs.unlinkSync('C:/BLOG/backend/' + imagePath)
 }
-
-// Set up Multer for file uploads
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'public/uploads/');
-    },
-    filename: (req, file, cb) => {
-      cb(null, Date.now() + path.extname(file.originalname));
-    },
-  });
-  
-  const upload = multer({ storage });
-  
-  // Upload an image
-  blogRoute.post('/upload', upload.single('image'), async (req, res) => {
-    try {
-      if (!req.file) {
-        return res.status(400).send('No file uploaded.');
-      }
-  
-      const { originalname, filename, path, mimetype } = req.file;
-  
-      // Save image data to MongoDB
-      const image = new imageSchema({ originalname, filename, path, mimetype });
-      await image.save();
-  
-      res.json(image);
-    } catch (error) {
-      res.status(400).json({ error: 'Failed to upload image.' });
-    }
-  });
-  
-  // Get an image by its ID
-  blogRoute.get('/:id', async (req, res) => {
-    try {
-      const image = await imageSchema.findById(req.params.id);
-  
-      if (!image) {
-        return res.status(400).json({ error: 'Image not found.' });
-      }
-  
-      res.sendFile(image.path);
-    } catch (error) {
-      res.status(400).json({ error: 'Failed to retrieve image.' });
-    }
-  });
 
 module.exports = blogRoute;
