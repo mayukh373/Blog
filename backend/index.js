@@ -24,14 +24,6 @@ app.use(express.urlencoded({limit: '50mb', extended: true}));
 app.use(cors());
 app.use("/blogRoute", blogRoute);
 app.use("/auth/blogRoute", protect, blogRoute)
-// Middleware to serve uploaded images
-app.use('/uploads', express.static('public/uploads'));
-
-
-
-// Define the image routes
-app.use('/images', blogRoute);
-
 
 // Middleware to serve uploaded images
 app.use('/public/uploads', express.static('public/uploads'));
