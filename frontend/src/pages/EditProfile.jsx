@@ -13,6 +13,7 @@ const EditProfile = ({ handleEditStatus, oldUserInfo, oldImagePath }) => {
   const [preview, setPreview] = useState("")
   const [error, setError] = useState({ status: false, message: "" })
   const { user, setUser } = useContext(UserContext)
+  const [foo, setFoo] = useState(false)
 
   useEffect(() => {
     setProfileValues();
@@ -32,6 +33,7 @@ const EditProfile = ({ handleEditStatus, oldUserInfo, oldImagePath }) => {
       setPreview("")
       return;
     }
+    setFoo(true)
     const fileReader = new FileReader();
     fileReader.readAsDataURL(pfile)
     fileReader.onload = () => {
@@ -48,7 +50,7 @@ const EditProfile = ({ handleEditStatus, oldUserInfo, oldImagePath }) => {
 
   const handleUserProfileUpdate = async () => {
     userInfo.links = links
-    userInfo.imagePath = null 
+    userInfo.imagePath = foo? null : oldImagePath
     let imagePath = "";
     if (file) {
       const data = new FormData()
@@ -63,7 +65,7 @@ const EditProfile = ({ handleEditStatus, oldUserInfo, oldImagePath }) => {
       }
     }
     try {
-      await axios.put("http://localhost:4000/blogRoute/update/user-profile/" + userId, {userInfo: userInfo, oldImagePath: oldImagePath, imagePath: imagePath})
+      await axios.put("http://localhost:4000/blogRoute/update/user-profile/" + userId, {userInfo: userInfo, oldImagePath: oldImagePath, imagePath: imagePath, foo: foo})
       setError({ status: false, message: "" })
       setUser({...user, imagePath: imagePath})
       handleEditStatus(true);

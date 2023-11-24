@@ -92,7 +92,7 @@ blogRoute.post("/create-post", (req, res) => {
     })
 })
 
-// search all posts (public)
+// search posts (public)
 blogRoute.get("/posts/:search", async (req, res) => {
     const search = req.params.search;
     const regex = new RegExp(search, 'i')
@@ -100,7 +100,7 @@ blogRoute.get("/posts/:search", async (req, res) => {
     return res.json(data)
 })
 
-//view all posts
+//view all posts(public)
 blogRoute.get("/posts", async (req, res) => {
     const data = await postSchema.find({}).exec();
     return res.json(data);
@@ -115,8 +115,8 @@ blogRoute.route("/posts/post/:id")
         return res.json(post);
     })
     .put(async (req, res) => {
-        const { post, oldImageData } = req.body;
-        deleteImage(oldImageData);
+        const { post, oldImageData, foo } = req.body;
+        if (foo) deleteImage(oldImageData);
         postSchema.findByIdAndUpdate(req.params.id, { $set: post }, (err, data) => {
             if (err)
                 return err;
@@ -186,14 +186,14 @@ blogRoute.get("/users/:id", async (req, res) => {
 
 //update profile data (private -- only accessible by account owner)
 blogRoute.put("/update/user-profile/:id", async (req, res) => {
-    const { userInfo, oldImagePath, imagePath } = req.body;
+    const { userInfo, oldImagePath, imagePath, foo } = req.body;
     const { errors, isValid } = ValidateUpdateProfileData(userInfo);
     if (!isValid) {
         delete (imagePath)
         return res.status(400).json(errors);
     }
-    deleteImage(oldImagePath)
-    if (imagePath) {
+    if (foo) {
+        deleteImage(oldImagePath)
         const userPosts = await postSchema.find({ userId: req.params.id }).exec();
         userPosts.map(async (post) => {
             await postSchema.findByIdAndUpdate(post._id, { userImagePath: imagePath })
@@ -300,7 +300,7 @@ blogRoute.delete("/post/comments/delete/:id", (req, res) => {
 //TODO: refresh token and access token to persist login on refresh
 const getToken = (id, username, email) => {
     return jwt.sign({ id, username, email }, process.env.JWT_SECRET, {
-        expiresIn: '10h'
+        expiresIn: '5h'
     })
 }
 

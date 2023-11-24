@@ -1,71 +1,88 @@
-
 import React from 'react';
-import { FaUsers, FaHandsHelping, FaBookOpen, FaFeatherAlt, FaMagic } from 'react-icons/fa';
-import { FaFacebook, FaInstagram } from 'react-icons/fa';
+import { FaUsers, FaHandsHelping, FaFeatherAlt, FaFacebookSquare, FaTwitterSquare, FaLinkedin } from 'react-icons/fa';
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+import EXPERTISE from '../assets/DefaultImages/AboutUsEXPERTISE.png'
+import { useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../context/UserContext';
 
 const AboutUs = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  const { user } = useContext(UserContext)
+  const navigate = useNavigate();
+
   return (
-    <div className="about-us-container">
-      <div className="about-us-box">
-        <h1 className="about-us-title"><FaBookOpen /> Welcome to Blog Market</h1>
+    <>
+      <Navbar />
+      <div className="flex flex-col space-y-12 mb-4 p-2">
+        <div className="flex flex-col about-us-top py-12 text-black shadow-black">
+          <div className="text-center about-us-h1">Discover.Connect.Unwind</div>
+          <div className="text-center about-us-h2">You write, we deliver</div>
+          <button className="mx-auto border-2 border-black p-2 my-[4%] hover:bg-red-50" onClick={() => user ? navigate("/write") : navigate("/login")} >Start Writing</button>
+          <div className="text-center">
+            We believe in the power of words to inspire, inform, and connect people from all walks of life.
+          </div>
+        </div>
 
-        <p className="about-us-text">
-          At Blog Market, we believe in the power of words to inspire, inform, and connect people from all walks of life.
-          Our commitment is to deliver content that sparks curiosity, fosters meaningful conversations, and enriches the lives of our readers.
-        </p>
-      </div>
+        <div className="justify-center md:justify-between mission-box flex flex-wrap md:h-56">
+          <div className="flex flex-col m-4 md:ms-20 space-y-2 justify-center md:basis-1/3">
+            <div className="about-us-subtitle flex" ><FaFeatherAlt className="me-2.5 my-auto" />Our Mission</div>
+            <div className="about-us-text">
+              At <strong>LucidLines</strong>, we aim to provide a diverse range of high-quality articles that cater to the varied interests of our audience.
+            </div>
+          </div>
+          <img className="h-60 shadow-md m-1 md:-mt-2 md:me-2" src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+        </div>
 
-      <div className="about-us-box mission-box">
-        <h2 className="about-us-subtitle"><FaFeatherAlt /> Our Mission</h2>
+        <div>
+          <div className="about-us-subtitle flex justify-center text-center mb-2 font-bold">What Sets Us Apart</div>
+          <div className="flex flex-row flex-wrap text-black max-md:space-y-2 md:space-x justify-center">
+            <div className="flex flex-col space-y-4 md:basis-1/3 p-5 apart-box text-center">
+              <img width={30} className="mx-auto" src={EXPERTISE} />
+              <div className="text-sm"> Expertise and Authenticity</div>
+              <div className="about-us-text font-light text-sm">
+                Our team of passionate writers and experts are dedicated to delivering content that is well-researched, accurate, and reliable.
+              </div>
+            </div>
+            <div className="flex flex-col space-y-4 md:basis-1/3 p-5 apart-box text-center">
+              <FaUsers className="mx-auto" style={{ fontSize: "24px" }} />
+              <div className="text-sm"> Diverse Perspectives</div>
+              <div className="about-us-text font-light text-sm">
+                Our content reflects a broad range of perspectives, ensuring that we cover topics that resonate with people from various backgrounds and interests.
+              </div>
+            </div>
+            <div className="flex flex-col space-y-4 md:basis-1/3 p-5 apart-box text-center">
+              <img width={30} className="mx-auto" src="https://static.thenounproject.com/png/4653373-200.png" />
+              <div className="text-sm">Engaging and User-Friendly Design</div>
+              <div className="about-us-text font-light text-sm">
+                Our user-friendly design ensures that you can easily navigate through our articles, finding the information you need in a visually appealing and accessible format.
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <p className="about-us-text">
-          At the heart of Blog Market is a mission to provide a diverse range of high-quality articles that cater to the varied interests of our audience.
-          Whether you're a seasoned enthusiast or a curious novice, our goal is to offer content that captivates, educates, and entertains.
-          We are dedicated to creating a space where knowledge meets passion, fostering a community that thrives on shared interests and a hunger for learning.
-        </p>
-      </div>
+        <div className="about-us-box community-box">
+          <h2 className="about-us-subtitle flex justify-center mb-4"><FaHandsHelping className="my-auto me-2" /> Join Our Community</h2>
 
-      <div className="about-us-box apart-box">
-        <h2 className="about-us-subtitle"><FaMagic /> What Sets Us Apart</h2>
+          <p className="about-us-text text-center md:mx-16">
+            We invite you to join our community by following us on social media, and actively participating in the discussions that unfold within our comment sections.
+            As we continue to grow and evolve, we are excited to have you with us every step of the way.
+          </p>
 
-        <h3 className="about-us-subsubtitle"><FaUsers /> Expertise and Authenticity</h3>
-        <p className="about-us-text">
-          Our team of passionate writers and experts are dedicated to delivering content that is well-researched, accurate, and reliable.
-          We strive to provide information that you can trust, ensuring that every article is backed by a commitment to quality and authenticity.
-        </p>
-
-        <h3 className="about-us-subsubtitle"><FaUsers /> Diverse Perspectives</h3>
-        <p className="about-us-text">
-          Blog Market takes pride in celebrating diversity. Our content reflects a broad range of perspectives, ensuring that we cover topics that resonate with people from various backgrounds and interests.
-          We believe that a diversity of voices leads to a richer, more inclusive conversation.
-        </p>
-
-        <h3 className="about-us-subsubtitle"><FaUsers /> Engaging and User-Friendly Design</h3>
-        <p className="about-us-text">
-          We understand the value of your time and strive to make your browsing experience seamless and enjoyable.
-          Our user-friendly design ensures that you can easily navigate through our articles, finding the information you need in a visually appealing and accessible format.
-        </p>
-      </div>
-
-      <div className="about-us-box community-box">
-        <h2 className="about-us-subtitle"><FaHandsHelping /> Join Our Community</h2>
-
-        <p className="about-us-text">
-          Blog Market is more than just a platform; it's a community of like-minded individuals who share a passion for learning and exploration.
-          We invite you to join our community by subscribing to our newsletter, following us on social media, and actively participating in the discussions that unfold within our comment sections.
-        </p>
-
-        <p className="about-us-text">
-          Thank you for being a part of the Blog Market journey. As we continue to grow and evolve, we are excited to have you with us every step of the way.
-          Stay tuned for captivating content that will inform, inspire, and ignite your curiosity.
-        </p>
-
-        <div className="social-icons">
-          <a href='https://www.facebook.com/'><FaFacebook className="icon" /></a>
-          <a href='https://www.instagram.com/accounts/login/?hl=en'> <FaInstagram className="icon" /> </a>
+          <div className="space-x-4 social-icons flex justify-center">
+            <a href="https://www.facebook.com"><FaFacebookSquare style={{ fontSize: "2em" }} className="" /></a>
+            <a href='https://www.twitter.com'><FaTwitterSquare style={{ fontSize: "2em" }} /></a>
+            <a href="https://www.linkedin.com"><FaLinkedin style={{ fontSize: "2em" }} /></a>
+          </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

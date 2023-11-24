@@ -22,7 +22,7 @@ const HomePosts = ({ post }) => {
             <em>{new Date(post.updatedAt).toString().slice(3, 10)}, {new Date(post.updatedAt).toString().slice(11, 15)}</em>
           </div>
         </div>
-        <div className="flex text-md font-bold text-center justify-center px-1 border-b-2 h-[100px]">
+        <div className="flex text-md font-bold text-center justify-center px-1 border-b h-[100px]">
           {post.title}
         </div>
         <div className="flex flex-row space-x-1 absolute right-4 bottom-2 post-view-stats" >

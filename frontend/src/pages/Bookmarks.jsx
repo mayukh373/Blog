@@ -10,7 +10,6 @@ import { FaRegBookmark, FaBookmark } from "react-icons/fa"
 
 
 const Bookmarks = () => {
-    const { search } = useLocation()
     const userId = useParams().id;
     const [posts, setPosts] = useState([])
     const [loader, setLoader] = useState(true)
@@ -19,7 +18,7 @@ const Bookmarks = () => {
 
     useEffect(() => {
         fetchPosts()
-    }, [search])
+    }, [])
 
     const fetchPosts = async () => {
         if (user.bookmarks.length !== 0) {
@@ -70,8 +69,9 @@ const Bookmarks = () => {
 
     return (
         <>
-            <Navbar/>
+            <Navbar />
             <div className="md:px-[24px] min-h-[80vh] bg-slate-300">
+                <div className="text-center border-b-2 border-black mb-2" style={{ fontSize: "2em", fontWeight: "bold", fontFamily: "serif" }}>Bookmarks</div>
                 {loader ? <div className="h-[40vh] flex justify-center items-center"><Loader /></div> : (user.bookmarks.length !== 0) ?
                     <div className="flex flex-wrap flex-row justify-center">{posts.map((post, i) => (
                         <div className="relative">

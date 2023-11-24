@@ -35,11 +35,11 @@ export default function ViewProfile() {
         fetchUserInfo();
         fetchPosts();
         createBoookmarkList(user)
-    }, [])
+    }, [userId])
 
     const fetchPosts = async () => {
         try {
-            const res = await axios.get("http://localhost:4000/blogRoute/posts/user/" + userId)
+            const res = await axios.get("http://localhost:4000/auth/blogRoute/posts/user/" + userId, { headers: { authorization: `Bearer ${user?.token}` } })
             res.data.sort((a, b) => (a.updatedAt < b.updatedAt) ? 1 : (a.updatedAt > b.updatedAt) ? -1 : 0)
             setPosts(res.data)
             if (res.data.length === 0) {
@@ -50,6 +50,7 @@ export default function ViewProfile() {
             }
         }
         catch (err) {
+            if (err.response.status === 401) navigate("/login")
             console.log(err)
         }
     }
@@ -58,13 +59,14 @@ export default function ViewProfile() {
         setLoader(true)
         const ele = document.getElementById("0");
         try {
-            const res = await axios.get("http://localhost:4000/blogRoute/users/" + userId)
+            const res = await axios.get("http://localhost:4000/auth/blogRoute/users/" + userId, { headers: { authorization: `Bearer ${user?.token}` } })
             setUserInfo(res.data)
             setImagePath(res.data.imagePath? res.data.imagePath.replace(/\\/g, '/') : "")
             setLoader(false)
             ele.classList.add("tab-grow-right")
         }
         catch (err) {
+            if (err.response.status === 401) navigate("/login")
             setLoader(true)
             console.log(err)
         }
@@ -131,7 +133,6 @@ export default function ViewProfile() {
         e.target.style.borderRight = "2px solid white";
         setToggle(e.target.id);
     }
-
     return (
         <>
             <Navbar />
@@ -140,7 +141,7 @@ export default function ViewProfile() {
                     <div className="profile-nav-container p-5">
                         <div className="h3 flex"><button className="tab-shrink-left" id="0" onClick={(e) => handleTab(e.target.id)}>Profile</button></div>
                         <div className="h3 flex"><button className="tab-shrink-left" id="1" onClick={(e) => handleTab(e.target.id)}>Blogs</button></div>
-                        <div className="h3 flex"><button className="tab-shrink-left" id="2" onClick={(e) => handleTab(e.target.id)}>Account Settings</button></div>
+                        {user && userInfo._id === user._id && <div className="h3 flex"><button className="tab-shrink-left" id="2" onClick={(e) => handleTab(e.target.id)}>Account Settings</button></div>}
                     </div>
                 </div>
                 {tab === "1" ?
@@ -193,7 +194,7 @@ export default function ViewProfile() {
                             }
                         </div> :
                         //display user account settings
-                        <div className="flex flex-col max-md:space-y-4 md:flex-row md:mx-40 md:space-x-8 justify-center my-8 h-[150px] text-sm">
+                        (user && user._id === userInfo._id)? <div className="flex flex-col max-md:space-y-4 md:flex-row md:mx-40 md:space-x-8 justify-center my-8 h-[150px] text-sm">
                             <div className="flex flex-row justify-center max-md:space-x-8 md:space-y-4 md:flex-col">
                                 <div onClick={(e) => handleToggle(e)} style={{ borderRight: "2px solid white" }} id="chngemail" className="px-1 flex btn-accinfo cursor-pointer text-center">Change Email</div>
                                 <div onClick={(e) => handleToggle(e)} id="chngpw" className="px-1 flex btn-accinfo cursor-pointer text-center">Change Password</div>
@@ -204,7 +205,7 @@ export default function ViewProfile() {
                                 {toggle === "chngpw" && <ChangePassword userId={userId} />}
                                 {toggle === "accdel" && <DeleteAccount userId={userId} />}
                             </div>
-                        </div>}
+                        </div> : ""}
             </div>
             {modal && <div className="profile-edit-modal" id="editprofile"><EditProfile handleEditStatus={handleEditStatus} oldUserInfo={userInfo} oldImagePath={imagePath} /></div>}
             <Footer />

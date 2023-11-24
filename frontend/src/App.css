@@ -1,3 +1,7 @@
+* {
+    /* font-family: "akkurat-regular" */
+}
+
 .view::after {
     display: block;
     content: '';
@@ -184,8 +188,44 @@
     cursor: pointer;
 }
 
-.btn-fav-true {
-    fill: red;
+.ql-toolbar.ql-snow,
+.ql-container,
+.blog-cats-container,
+.cats,
+.create-title,
+.create-desc {
+    background-color: white;
+    border: 1px solid #ccc;
+}
+
+input::file-selector-button {
+    color: black;
+    padding: 0.5em;
+    border: thin solid grey;
+    border-radius: 3px;
+}
+
+#scroll-to-top {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 4px;
+    position: fixed;
+    right: 8px;
+    top: 80%;
+    z-index: 99;
+}
+
+#scroll-to-top:hover {
+    border-color: rgb(7, 99, 135);
+    fill: rgb(7, 99, 135);
+}
+
+.inpost-bookmark {
+    position: fixed;
+    right: 12px;
+    top: 88%;
+    z-index: 99;
+    font-size: 30px;
 }
 
 /**------------------------------------------------------------------------------------------------/
@@ -197,17 +237,27 @@
     background: #fff;
     color: #333;
 } */
-/* 
-.about-us-container {
-    padding: 30px;
-    margin: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+.about-us-h1 {
+    font-size: 1.5vmax;
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.about-us-h2 {
+    font-size: 1.4vmax;
+    font-weight: 200;
+}
+
+.about-us-top {
+    background-image: url("https://images.unsplash.com/photo-1542435503-956c469947f6?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: cover;
+    background-position-y: center;
+    background-position-x: 0px;
 }
 
 .about-us-box {
     padding: 20px;
-    border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
@@ -222,12 +272,10 @@
 .about-us-subtitle {
     font-family: 'Verdana', sans-serif;
     font-size: 24px;
-    margin-top: 30px;
 }
 
 .about-us-text {
     line-height: 1.6;
-    margin-bottom: 20px;
 }
 
 .social-icons {
@@ -241,16 +289,17 @@
 }
 
 .mission-box {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
     background-color: #000;
     color: #fff;
-}
-
-.apart-box {
-    background-color: #fff;
-    color: #000;
 }
 
 .community-box {
     background-color: #000;
     color: #fff;
-} */
+}
+
+.apart-box {
+    box-shadow:  0 16px 6px -6px rgb(187, 190, 190);
+}
