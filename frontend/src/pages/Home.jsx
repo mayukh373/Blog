@@ -25,7 +25,7 @@ const Home = () => {
   const [showCats, setShowCats] = useState(false)
   const [checked, setChecked] = useState([])
   const [sort, setSort] = useState(false)
-
+  console.log(URL)
   useEffect(() => {
     fetchPostsWithQuery()
   }, [search])
