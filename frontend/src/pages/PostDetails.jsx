@@ -94,7 +94,7 @@ const PostDetails = () => {
 
   const handleDeletePost = async () => {
     try {
-      await axios.delete(URL+"/auth/blogRoute/posts/delete/" + postId)
+      await axios.delete(URL+"/blogRoute/posts/delete/" + postId)
       navigate("/")
     }
     catch (err) {
