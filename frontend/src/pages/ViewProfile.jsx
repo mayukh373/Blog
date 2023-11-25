@@ -13,6 +13,7 @@ import EditProfile from './EditProfile'
 import ChangePassword from '../components/ChangePassword'
 import DeleteAccount from "../components/DeleteAccount"
 import ChangeEmail from "../components/ChangeEmail"
+import {URL} from '../url' 
 
 export default function ViewProfile() {
 
@@ -39,7 +40,7 @@ export default function ViewProfile() {
 
     const fetchPosts = async () => {
         try {
-            const res = await axios.get("http://localhost:4000/auth/blogRoute/posts/user/" + userId, { headers: { authorization: `Bearer ${user?.token}` } })
+            const res = await axios.get(URL+"/blogRoute/posts/user/" + userId)
             res.data.sort((a, b) => (a.updatedAt < b.updatedAt) ? 1 : (a.updatedAt > b.updatedAt) ? -1 : 0)
             setPosts(res.data)
             if (res.data.length === 0) {
@@ -50,7 +51,7 @@ export default function ViewProfile() {
             }
         }
         catch (err) {
-            if (err.response.status === 401) navigate("/login")
+            // if (err.response.status === 401) navigate("/login")
             console.log(err)
         }
     }
@@ -59,14 +60,14 @@ export default function ViewProfile() {
         setLoader(true)
         const ele = document.getElementById("0");
         try {
-            const res = await axios.get("http://localhost:4000/auth/blogRoute/users/" + userId, { headers: { authorization: `Bearer ${user?.token}` } })
+            const res = await axios.get(URL+"/blogRoute/users/" + userId)
             setUserInfo(res.data)
             setImagePath(res.data.imagePath? res.data.imagePath.replace(/\\/g, '/') : "")
             setLoader(false)
             ele.classList.add("tab-grow-right")
         }
         catch (err) {
-            if (err.response.status === 401) navigate("/login")
+            // if (err.response.status === 401) navigate("/login")
             setLoader(true)
             console.log(err)
         }
@@ -94,7 +95,7 @@ export default function ViewProfile() {
 
     const updateBookmark = async (bookmark, status) => {
         try {
-            const res = await axios.put("http://localhost:4000/blogRoute/users/bookmarks/" + user._id, { bookmark: bookmark, status: status })
+            const res = await axios.put(URL+"/blogRoute/users/bookmarks/" + user._id, { bookmark: bookmark, status: status })
             setUser({ ...user, bookmarks: res.data })
         }
         catch (err) {
@@ -166,7 +167,7 @@ export default function ViewProfile() {
                             {loader ? <div className="h-[40vh] flex justify-center items-center"><Loader /></div> :
                                 <div className="flex flex-row flex-wrap justify-center space-x-12">
                                     <div className="flex flex-col items-center w-48 shrink-0">
-                                        <div className="flex mx-auto my-auto"><img className="w-40 h-40 rounded-full mx-auto border-4 border-black p-1" src={imagePath ? "http://localhost:4000/" + imagePath : "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"} alt="Rounded avatar"></img></div>
+                                        <div className="flex mx-auto my-auto"><img className="w-40 h-40 rounded-full mx-auto border-4 border-black p-1" src={imagePath ? URL + "/" + imagePath : "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"} alt="Rounded avatar"></img></div>
                                         {<div className="flex mt-2">
                                             <button className="edit-profile bg-black text-white p-1 mb-2" onClick={() => setModal(true)}>
                                                 <div className="flex">

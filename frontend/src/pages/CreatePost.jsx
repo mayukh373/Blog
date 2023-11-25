@@ -10,6 +10,7 @@ import ReactQuill from 'react-quill'
 import { useNavigate } from 'react-router-dom'
 import DefaultPost from '../assets/DefaultImages/postDefault.png'
 import { FaCheckSquare, FaRegSquare } from "react-icons/fa"
+import {URL} from '../url' 
 
 
 const CreatePost = () => {
@@ -48,7 +49,7 @@ const CreatePost = () => {
       const data = new FormData()
       data.append("file", file)
       try {
-        const imgUpload = await axios.post("http://localhost:4000/blogRoute/uploads", data)
+        const imgUpload = await axios.post(URL+"/blogRoute/uploads", data)
         post.imagePath = imgUpload.data;
       }
       catch (err) {
@@ -56,7 +57,7 @@ const CreatePost = () => {
       }
     }
     try {
-      const res = await axios.post("http://localhost:4000/auth/blogRoute/create-post", post, { headers: { 'authorization': 'Bearer ' + user.token } })
+      const res = await axios.post(URL+"/auth/blogRoute/create-post", post, { headers: { 'authorization': 'Bearer ' + user.token } })
       navigate("/posts/post/" + res.data._id)
     }
     catch (err) {

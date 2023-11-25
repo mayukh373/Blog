@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import Footer from "../components/Footer"
 import { useState } from "react"
 import axios from 'axios'
+import {URL} from '../url' 
 
 const Register = () => {
 
@@ -13,7 +14,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     try {
-      const res = await axios.post("http://localhost:4000/blogRoute/create-account", { username, email, password, createdOn: new Date(Date.now()).toISOString() })
+      const res = await axios.post(URL+"/blogRoute/create-account", { username, email, password, createdOn: new Date(Date.now()).toISOString() })
       setError({ status: false, message: "" })
       navigate("/login")
     }

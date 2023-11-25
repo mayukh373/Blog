@@ -3,6 +3,7 @@ import {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
+import {URL} from '../url' 
 
 export default function DeleteAccount({userId}) {
 
@@ -17,7 +18,7 @@ export default function DeleteAccount({userId}) {
             return;
         }
         try {
-            const res = await axios.delete("http://localhost:4000/blogRoute/delete/user/"+userId, {data: {password: password}})
+            const res = await axios.delete(URL+"/blogRoute/delete/user/"+userId, {data: {password: password}})
             console.log(res.data)
             setError({status: false, message: ""})
             setUser(null)

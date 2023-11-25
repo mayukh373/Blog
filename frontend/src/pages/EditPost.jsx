@@ -9,6 +9,7 @@ import 'quill/dist/quill.snow.css'
 import ReactQuill from 'react-quill'
 import DefaultPost from '../assets/DefaultImages/postDefault.png'
 import { FaCheckSquare, FaRegSquare } from "react-icons/fa"
+import {URL} from '../url' 
 
 
 
@@ -33,7 +34,7 @@ const EditPost = () => {
 
   const fetchPost = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/auth/blogRoute/posts/post/" + postId, { headers: { 'authorization': 'Bearer ' + user.token } })
+      const res = await axios.get(URL+"/auth/blogRoute/posts/post/" + postId, { headers: { 'authorization': 'Bearer ' + user.token } })
       setTitle(res.data.title)
       setContent(res.data.content)
       setDesc(res.data.desc)
@@ -82,7 +83,7 @@ const EditPost = () => {
       const data = new FormData()
       data.append("file", file)
       try {
-        const imgUpload = await axios.post("http://localhost:4000/blogRoute/uploads", data)
+        const imgUpload = await axios.post(URL+"/blogRoute/uploads", data)
         post.imagePath = imgUpload.data;
       }
       catch (err) {
@@ -90,7 +91,7 @@ const EditPost = () => {
       }
     }
     try {
-      await axios.put("http://localhost:4000/auth/blogRoute/posts/post/" + postId, { post: post, oldImageData: imagePath, foo: foo }, { headers: { 'authorization': 'Bearer ' + user.token } })
+      await axios.put(URL+"/auth/blogRoute/posts/post/" + postId, { post: post, oldImageData: imagePath, foo: foo }, { headers: { 'authorization': 'Bearer ' + user.token } })
       navigate("/posts/post/" + postId)
     }
     catch (err) {
@@ -126,7 +127,7 @@ const EditPost = () => {
         <form className='w-full flex flex-col space-y-4 md:space-y-8 mt-4'>
           <input value={title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder='Enter post title' className='px-4 py-2 outline-none create-title' />
           <input style={{ resize: "none", overflow: "hidden" }} value={desc} onChange={(e) => setDesc(e.target.value)} type="text" placeholder='Enter post description' className='px-4 py-2 outline-none create-desc' />
-          <img src={preview ? preview : imagePath ? 'http://localhost:4000/' + imagePath : DefaultPost} alt="post image"></img>
+          <img src={preview ? preview : imagePath ? URL+'/' + imagePath : DefaultPost} alt="post image"></img>
           <input onChange={(e) => handleFileChange(e.target.files[0])} type="file" />
           <div className="flex flex-col">
             <div className="border border-b-0 cats px-2 py-1">Choose one or more categories</div>

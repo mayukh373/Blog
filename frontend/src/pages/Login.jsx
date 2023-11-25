@@ -3,6 +3,7 @@ import Footer from "../components/Footer"
 import { useContext, useState, useEffect } from "react"
 import axios from "axios"
 import { UserContext } from "../context/UserContext"
+import {URL} from '../url' 
 
 
 const Login = () => {
@@ -12,13 +13,13 @@ const Login = () => {
   const { user, setUser } = useContext(UserContext)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (user) navigate('/')
-  })
+  // useEffect(() => {
+  //   if (user) navigate('/')
+  // })
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:4000/blogRoute/login", { email, password })
+      const res = await axios.post(URL+"/blogRoute/login", { email, password })
       setUser(res.data);
       navigate("/");
     }

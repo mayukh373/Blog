@@ -7,6 +7,7 @@ import axios from "axios"
 import PostsView from "../components/PostsView"
 import Loader from "../components/Loader"
 import { FaRegBookmark, FaBookmark } from "react-icons/fa"
+import {URL} from '../url' 
 
 
 const MyBlogs = () => {
@@ -26,7 +27,7 @@ const MyBlogs = () => {
   const fetchPosts = async () => {
     setLoader(true)
     try {
-      const res = await axios.get("http://localhost:4000/blogRoute/posts/user/" + userId)
+      const res = await axios.get(URL+"/blogRoute/posts/user/" + userId)
       res.data.sort((a, b) => (a.updatedAt < b.updatedAt) ? 1 : (a.updatedAt > b.updatedAt) ? -1 : 0)
       setPosts(res.data)
       if (res.data.length === 0) {
@@ -66,7 +67,7 @@ const MyBlogs = () => {
 
   const updateBookmark = async (bookmark, status) => {
     try {
-      const res = await axios.put("http://localhost:4000/blogRoute/users/bookmarks/" + user._id, { bookmark: bookmark, status: status })
+      const res = await axios.put(URL+"/blogRoute/users/bookmarks/" + user._id, { bookmark: bookmark, status: status })
       setUser({ ...user, bookmarks: res.data })
     }
     catch (err) {

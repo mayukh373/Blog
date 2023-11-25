@@ -11,6 +11,7 @@ import { UserContext } from "../context/UserContext"
 import Loader from "../components/Loader"
 import Parser from 'html-react-parser';
 import DefaultPost from '../assets/DefaultImages/postDefault.png'
+import {URL} from '../url' 
 
 const PostDetails = () => {
 
@@ -35,7 +36,7 @@ const PostDetails = () => {
   const fetchPost = async () => {
     setLoader(true)
     try {
-      const res = await axios.get("http://localhost:4000/auth/blogRoute/posts/post/" + postId, { headers: { authorization: `Bearer ${user?.token}` } })
+      const res = await axios.get(URL+"/auth/blogRoute/posts/post/" + postId, { headers: { authorization: `Bearer ${user?.token}` } })
       updateViews(res.data.viewedBy)
       setPost(res.data)
       setUserImagePath(res.data.userImagePath ? res.data.userImagePath.replace(/\\/g, '/') : "")
@@ -70,7 +71,7 @@ const PostDetails = () => {
 
   const updateBookmark = async (bookmark, status) => {
     try {
-      const res = await axios.put("http://localhost:4000/auth/blogRoute/users/bookmarks/" + user._id, { bookmark: bookmark, status: status }, { headers: { authorization: `Bearer ${user?.token}` } })
+      const res = await axios.put(URL+"/auth/blogRoute/users/bookmarks/" + user._id, { bookmark: bookmark, status: status }, { headers: { authorization: `Bearer ${user?.token}` } })
       setUser({ ...user, bookmarks: res.data })
     }
     catch (err) {
@@ -83,7 +84,7 @@ const PostDetails = () => {
     if (viewedBy && viewedBy.includes(user._id)) return;
     try {
       viewedBy.push(user._id)
-      await axios.put("http://localhost:4000/auth/blogRoute/posts/update-views/" + postId, { viewedBy: viewedBy }, { headers: { authorization: `Bearer ${user?.token}` } })
+      await axios.put(URL+"/auth/blogRoute/posts/update-views/" + postId, { viewedBy: viewedBy }, { headers: { authorization: `Bearer ${user?.token}` } })
     }
     catch (err) {
       if (err.response.status === 401) navigate("/login")
@@ -93,7 +94,7 @@ const PostDetails = () => {
 
   const handleDeletePost = async () => {
     try {
-      await axios.delete("http://localhost:4000/auth/blogRoute/posts/delete/" + postId, { data: { imagePath: imagePath } }, { headers: { authorization: `Bearer ${user?.token}` } })
+      await axios.delete(URL+"/auth/blogRoute/posts/delete/" + postId, { data: { imagePath: imagePath } }, { headers: { authorization: `Bearer ${user?.token}` } })
       navigate("/")
     }
     catch (err) {
@@ -104,7 +105,7 @@ const PostDetails = () => {
 
   const fetchPostComments = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/auth/blogRoute/post/comments/" + postId, { headers: { authorization: `Bearer ${user?.token}` } })
+      const res = await axios.get(URL+"/auth/blogRoute/post/comments/" + postId, { headers: { authorization: `Bearer ${user?.token}` } })
       res.data.userImagePath?.replace(/\\/g, '/')
       setComments(res.data)
     }
@@ -117,7 +118,7 @@ const PostDetails = () => {
   const postComment = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post("http://localhost:4000/auth/blogRoute/post/comments/create", { comment: comment, author: user.username, postId: postId, userImagePath: user.imagePath, userId: user._id, postedAt: new Date(Date.now()).toISOString() }, { headers: { authorization: `Bearer ${user?.token}` } })
+      const res = await axios.post(URL+"/auth/blogRoute/post/comments/create", { comment: comment, author: user.username, postId: postId, userImagePath: user.imagePath, userId: user._id, postedAt: new Date(Date.now()).toISOString() }, { headers: { authorization: `Bearer ${user?.token}` } })
       fetchPostComments()
       setComment("")
     }
@@ -156,7 +157,7 @@ const PostDetails = () => {
             <div className="flex items-center justify-center">
               <div className="flex flex-row space-x-4">
                 <Link to={"/view-profile/" + post.userId}>
-                  <div className="flex"><img className="w-8 h-8 rounded-full me-1.5" src={userImagePath ? "http://localhost:4000/" + userImagePath : "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"} />
+                  <div className="flex"><img className="w-8 h-8 rounded-full me-1.5" src={userImagePath ? URL+"/" + userImagePath : "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"} />
                     <span className="text-blue-500 "><u>{post.username}</u></span></div>
                 </Link>
                 <div className="text-gray-300">•</div>
@@ -168,7 +169,7 @@ const PostDetails = () => {
               <p className="cursor-pointer" onClick={handleDeletePost}><MdDelete /></p>
             </div>}
             <div className="mx-auto mt-4 text-gray-600">{post.desc}</div>
-            <img src={imagePath ? 'http://localhost:4000/' + imagePath : DefaultPost} className="w-full mx-auto mt-8 border" alt="" />
+            <img src={imagePath ? URL + '/' + imagePath : DefaultPost} className="w-full mx-auto mt-8 border" alt="" />
             <div className="mx-auto mt-10">{Parser(post.content ? post.content : "")}</div>
             <div className="flex items-center mt-8 space-x-4 font-semibold">
               <p>Categories:</p>

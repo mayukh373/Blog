@@ -5,6 +5,7 @@ import { useContext, useState, useRef, useEffect } from "react"
 import Menu from "./Menu"
 import { UserContext } from "../context/UserContext"
 
+
 const Navbar = ({ posts }) => {
 
   const [prompt, setPrompt] = useState("")

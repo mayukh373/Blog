@@ -6,6 +6,7 @@ import EXPERTISE from '../assets/DefaultImages/AboutUsEXPERTISE.png'
 import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/UserContext';
+import {URL} from '../url' 
 
 const AboutUs = () => {
 

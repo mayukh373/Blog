@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import {URL} from '../url' 
 
 
 export default function ChangePassword({userId}) {
@@ -13,7 +14,7 @@ export default function ChangePassword({userId}) {
 
     const changePassword = async () => {
         try {
-            await axios.put("http://localhost:4000/blogRoute/update/user-password/"+userId, {currentPassword, newPassword})
+            await axios.put(URL+"/blogRoute/update/user-password/"+userId, {currentPassword, newPassword})
             navigate("/login")
         }
         catch(err) {

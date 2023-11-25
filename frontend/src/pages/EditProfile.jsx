@@ -3,6 +3,7 @@ import axios from "axios"
 import { useParams } from "react-router-dom"
 import { useContext } from "react"
 import { UserContext } from "../context/UserContext"
+import {URL} from '../url' 
 
 
 const EditProfile = ({ handleEditStatus, oldUserInfo, oldImagePath }) => {
@@ -56,7 +57,7 @@ const EditProfile = ({ handleEditStatus, oldUserInfo, oldImagePath }) => {
       const data = new FormData()
       data.append("file", file)
       try {
-        const imgUpload = await axios.post("http://localhost:4000/blogRoute/uploads", data)
+        const imgUpload = await axios.post(URL+"/blogRoute/uploads", data)
         imagePath = imgUpload.data;
         userInfo.imagePath = imgUpload.data;
       }
@@ -65,7 +66,7 @@ const EditProfile = ({ handleEditStatus, oldUserInfo, oldImagePath }) => {
       }
     }
     try {
-      await axios.put("http://localhost:4000/blogRoute/update/user-profile/" + userId, {userInfo: userInfo, oldImagePath: oldImagePath, imagePath: imagePath, foo: foo})
+      await axios.put(URL+"/blogRoute/update/user-profile/" + userId, {userInfo: userInfo, oldImagePath: oldImagePath, imagePath: imagePath, foo: foo})
       setError({ status: false, message: "" })
       setUser({...user, imagePath: imagePath})
       handleEditStatus(true);
@@ -89,7 +90,7 @@ const EditProfile = ({ handleEditStatus, oldUserInfo, oldImagePath }) => {
       </div>
       <div className="flex flex-col space-y-6 md:space-y-0 md:flex-row flex-wrap space-x-12 justify-center">
         <div className="flex flex-col space-y-4 items-center">
-          <div className="flex h-36"><img className="w-36 rounded-full mx-auto border-2" src={preview ? preview : oldImagePath? "http://localhost:4000/"+oldImagePath : "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"} alt="Rounded avatar"></img></div>
+          <div className="flex h-36"><img className="w-36 rounded-full mx-auto border-2" src={preview ? preview : oldImagePath? URL+"/"+oldImagePath : "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"} alt="Rounded avatar"></img></div>
           <div className="flex shrink-1"><input onChange={(e) => handleFileChange(e.target.files[0])} type="file" className="max-w-[200px]" /></div>
         </div>
           <div className="flex flex-col justify-center space-y-6 items-center">

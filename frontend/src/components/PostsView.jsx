@@ -1,6 +1,6 @@
 import { FaRegEye } from 'react-icons/fa';
 import DefaultPost from '../assets/DefaultImages/postDefault.png'
-
+import {URL} from '../url' 
 
 const HomePosts = ({ post }) => {
 
@@ -11,7 +11,7 @@ const HomePosts = ({ post }) => {
     <>
       <div className="flex flex-col w-100 bg-white relative">
         <div className="post-cover">
-          <img src={imagePath ? 'http://localhost:4000/' + imagePath : DefaultPost} alt="post image" />
+          <img src={imagePath ? URL+'/' + imagePath : DefaultPost} alt="post image" />
         </div>
         <div className="flex flex-col space-y-0.5 m-2 text-sm font-semibold text-gray-500 items-center">
           <div className="flex flex-row space-x-1">

@@ -9,6 +9,7 @@ import { UserContext } from "../context/UserContext"
 import { CategoryContext } from "../context/CategoryContext"
 import { FaRegBookmark, FaBookmark, FaCaretDown, FaCheckSquare, FaRegSquare } from "react-icons/fa"
 import { Scrollbar } from 'react-scrollbars-custom'
+import {URL} from '../url' 
 
 
 const Home = () => {
@@ -35,18 +36,10 @@ const Home = () => {
     createBoookmarkList(user)
   }, [])
 
-  useEffect(() => {
-    const fetchReq = async() => {
-      await refresh();
-      console.log("e")
-    }
-    fetchReq()
-  }, [])
-
   const fetchPostsWithQuery = async () => {
     setLoader(true)
     try {
-      const res = await axios.get("http://localhost:4000/blogRoute/posts/" + search)
+      const res = await axios.get(URL+"/blogRoute/posts/" + search)
       setDisplayPosts(res.data)
       if (res.data.length === 0) {
         setNoResults(true)
@@ -65,7 +58,7 @@ const Home = () => {
   const fetchPosts = async () => {
     setLoader(true)
     try {
-      const res = await axios.get("http://localhost:4000/blogRoute/posts")
+      const res = await axios.get(URL+"/blogRoute/posts")
       setPosts(res.data)
       if (!search) setDisplayPosts(res.data)
       if (res.data.length === 0) {
@@ -104,7 +97,7 @@ const Home = () => {
 
   const updateBookmark = async (bookmark, status) => {
     try {
-      const res = await axios.put("http://localhost:4000/blogRoute/users/bookmarks/" + user._id, { bookmark: bookmark, status: status })
+      const res = await axios.put(URL+"/blogRoute/users/bookmarks/" + user._id, { bookmark: bookmark, status: status })
       setUser({ ...user, bookmarks: res.data })
     }
     catch (err) {

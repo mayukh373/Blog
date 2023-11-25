@@ -297,7 +297,6 @@ blogRoute.delete("/post/comments/delete/:id", (req, res) => {
 })
 
 //generate jwt
-//TODO: refresh token and access token to persist login on refresh
 const getToken = (id, username, email) => {
     return jwt.sign({ id, username, email }, process.env.JWT_SECRET, {
         expiresIn: '5h'

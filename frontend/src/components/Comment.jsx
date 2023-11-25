@@ -3,6 +3,7 @@ import { MdDelete } from "react-icons/md"
 import { useContext } from "react"
 import { UserContext } from "../context/UserContext"
 import { Link } from 'react-router-dom'
+import {URL} from '../url' 
 
 const Comment = ({ c, cb }) => {
 
@@ -10,7 +11,7 @@ const Comment = ({ c, cb }) => {
 
   const deleteComment = async (id) => {
     try {
-      await axios.delete("http://localhost:4000/blogRoute/post/comments/delete/" + id)
+      await axios.delete(URL+"/blogRoute/post/comments/delete/" + id)
       cb()
     }
     catch (err) {

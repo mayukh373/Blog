@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState, useContext } from 'react'
 import { UserContext } from '../context/UserContext'
-
+import {URL} from '../url' 
 
 export default function ChangeEmail({ currentEmail, userId }) {
 
@@ -11,7 +11,7 @@ export default function ChangeEmail({ currentEmail, userId }) {
 
     const ChangeEmail = async () => {
         try {
-            const res = await axios.put("http://localhost:4000/blogRoute/update/user-email/"+userId, {email: email})
+            const res = await axios.put(URL+"/blogRoute/update/user-email/"+userId, {email: email})
             setError({ status: false, message: "" });
             setCurrEmail(email);
         }
