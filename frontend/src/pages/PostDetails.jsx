@@ -94,11 +94,11 @@ const PostDetails = () => {
 
   const handleDeletePost = async () => {
     try {
-      await axios.delete(URL+"/auth/blogRoute/posts/delete/" + postId, { data: { imagePath: imagePath } }, { headers: { authorization: `Bearer ${user?.token}` } })
+      await axios.delete(URL+"/auth/blogRoute/posts/delete/" + postId)
       navigate("/")
     }
     catch (err) {
-      if (err.response.status === 401) navigate("/login")
+      // if (err.response.status === 401) navigate("/login")
       console.log(err)
     }
   }
